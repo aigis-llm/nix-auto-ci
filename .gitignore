@@ -1,0 +1,3 @@
+.direnv/
+testing-flake/flake.lock
+.nixos-test-history
