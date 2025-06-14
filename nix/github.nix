@@ -105,7 +105,7 @@
               }
               {
                 name = "report";
-                run = "nix run .#nix-auto-ci-report artifacts/results/result_parsed.json {{ matrix.attr }}";
+                run = "nix run .#nix-auto-ci-report artifacts/results/result_parsed.json \${{ matrix.attr }}";
               }
             ];
         };
