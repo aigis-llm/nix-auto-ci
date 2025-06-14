@@ -29,8 +29,11 @@ jobs:
           '
     timeout-minutes: 60
   report:
+    needs:
+    - fast-build
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: determinatesystems/nix-installer-action@main
       with:
         determinate: false

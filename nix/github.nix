@@ -82,6 +82,7 @@
             ++ postUpload;
         };
         report = {
+          needs = [ "fast-build" ];
           strategy = {
             matrix = {
               attr = builtins.attrNames flake.checks.${arch};
@@ -89,6 +90,9 @@
           };
           steps =
             [
+              {
+                uses = "actions/checkout@v4";
+              }
               customInstallStep
             ]
             ++ cacheSteps
