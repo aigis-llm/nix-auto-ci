@@ -30,7 +30,9 @@ _localFlake:
           dontUnpack = true;
           installPhase = ''
             install -m755 -D ${../report.nu} $out/bin/nix-auto-ci-report
-            wrapProgram $out/bin/nix-auto-ci-report --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.unixtools.script ]}
+            wrapProgram $out/bin/nix-auto-ci-report --prefix PATH : ${
+              pkgs.lib.makeBinPath [ pkgs.unixtools.script ]
+            }
           '';
         };
         packages.__patched-nix-fast-build = pkgs.nix-fast-build.overrideAttrs (oldAttrs: {
