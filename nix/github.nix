@@ -84,6 +84,7 @@
         report = {
           needs = [ "fast-build" ];
           strategy = {
+            fail-fast = false;
             matrix = {
               attr = builtins.attrNames flake.checks.${arch};
             };
