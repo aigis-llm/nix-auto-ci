@@ -65,7 +65,7 @@
               }
               {
                 name = "transform";
-                run = "nix shell --inputs-from . nixpkgs#unixtools.script nixpkgs#nushell --command nu ./transform.nu result.json";
+                run = "nix shell --inputs-from . .#nix-auto-ci-transform -- result.json";
               }
               {
                 name = "upload artifact";

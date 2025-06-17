@@ -21,11 +21,17 @@ _localFlake:
         };
         packages.nix-auto-ci-report = pkgs.stdenv.mkDerivation {
           name = "nix-auto-ci-report";
+          nativeBuildInputs = [
+            pkgs.makeWrapper
+          ];
           buildInputs = [
             pkgs.nushell
           ];
           dontUnpack = true;
-          installPhase = "install -m755 -D ${../report.nu} $out/bin/nix-auto-ci-report";
+          installPhase = ''
+            install -m755 -D ${../report.nu} $out/bin/nix-auto-ci-report
+            wrapProgram $out/bin/nix-auto-ci-report --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.unixtools.script ]}
+          '';
         };
         packages.__patched-nix-fast-build = pkgs.nix-fast-build.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or [ ]) ++ [ ../nix-fast-build.patch ];
