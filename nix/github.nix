@@ -59,13 +59,13 @@
             ++ [
               {
                 name = "nix-fast-build";
-                run = "nix run nixpkgs#${
+                run = "nix run --inputs-from . nixpkgs#${
                   if useLix then "lixPackageSets.latest." else ""
                 }nix-fast-build -- --no-nom --flake \".#checks.${arch}\" --result-file result.json || true";
               }
               {
                 name = "transform";
-                run = "nix shell nixpkgs#unixtools.script nixpkgs#nushell --command nu ./transform.nu result.json";
+                run = "nix shell --inputs-from . nixpkgs#unixtools.script nixpkgs#nushell --command nu ./transform.nu result.json";
               }
               {
                 name = "upload artifact";
@@ -105,7 +105,7 @@
               }
               {
                 name = "report";
-                run = "nix run .#nix-auto-ci-report artifacts/results/result_parsed.json \${{ matrix.attr }}";
+                run = "nix run --inputs-from . .#nix-auto-ci-report artifacts/results/result_parsed.json \${{ matrix.attr }}";
               }
             ];
         };
