@@ -65,7 +65,7 @@
               }
               {
                 name = "transform";
-                run = "nix shell --inputs-from . .#nix-auto-ci-transform -- result.json";
+                run = "nix run --inputs-from . .#nix-auto-ci-transform -- result.json";
               }
               {
                 name = "upload artifact";
