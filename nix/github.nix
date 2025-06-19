@@ -6,6 +6,7 @@
       shouldCache ? true,
       preBuild ? [ ],
       postUpload ? [ ],
+      pushBranches ? [ "main" ],
       runs-on ? "ubuntu-latest",
       arch ? "x86_64-linux",
       workflowName ? "Nix ${arch}",
@@ -42,7 +43,9 @@
     {
       name = workflowName;
       on = {
-        push = { };
+        push = {
+          branches = pushBranches;
+        };
         pull_request = { };
       };
       jobs = {
