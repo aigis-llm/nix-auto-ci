@@ -66,7 +66,9 @@
 
         flake = {
           inherit flakeModule;
-          makeNixGithubAction = (import ./nix/github.nix).makeNixGithubAction;
+          lib = {
+            makeNixGithubAction = (import ./nix/github.nix).makeNixGithubAction;
+          };
         };
 
         perSystem =
