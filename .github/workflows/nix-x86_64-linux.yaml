@@ -3,7 +3,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@main
+    - uses: determinatesystems/nix-installer-action@v20
       with:
         determinate: false
         diagnostic-endpoint: ''
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@main
+    - uses: determinatesystems/nix-installer-action@v20
       with:
         determinate: false
         diagnostic-endpoint: ''
