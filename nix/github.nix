@@ -19,7 +19,7 @@
           installStep
         else
           {
-            uses = "determinatesystems/nix-installer-action@main";
+            uses = "determinatesystems/nix-installer-action@${if (useLix) then "v20" else "main"}";
             "with" = {
               determinate = false;
               logger = "pretty";
