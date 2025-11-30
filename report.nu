@@ -2,9 +2,9 @@
 
 def main (file: string, attr: string) {
   open $file
-  | filter {|x| $x.attr == $attr}
-  | filter {|x| $x.error != null}
-  | filter {|x| $x.type in ["EVAL", "BUILD"]}
+  | where {|x| $x.attr == $attr}
+  | where {|x| $x.error != null}
+  | where {|x| $x.type in ["EVAL", "BUILD"]}
   | $in.0
   | match $in.type {
     "EVAL" => (do {

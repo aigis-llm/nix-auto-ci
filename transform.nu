@@ -21,7 +21,7 @@ def main (file: string) {
               | lines
               | each {|row| $row | cut -c 6-}
               | each {|row| $row | from json}
-              | filter {|log| $log.action == "msg"}
+              | where {|log| $log.action == "msg"}
               | last
               | $in.msg
           })
