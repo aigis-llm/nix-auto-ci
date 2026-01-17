@@ -35,14 +35,6 @@ _localFlake:
             }
           '';
         };
-        packages.__patched-nix-fast-build = pkgs.nix-fast-build.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or [ ]) ++ [ ../nix-fast-build.patch ];
-        });
-        packages.__patched-lix-fast-build =
-          pkgs.lixPackageSets.latest.nix-fast-build.overrideAttrs
-            (oldAttrs: {
-              patches = (oldAttrs.patches or [ ]) ++ [ ../nix-fast-build.patch ];
-            });
       };
   };
 }

@@ -15,7 +15,7 @@
     actions-nix.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-parts.follows = "flake-parts";
-      pre-commit-hooks.follows = "git-hooks";
+      git-hooks.follows = "git-hooks";
     };
   };
 
@@ -46,7 +46,7 @@
           git-hooks.flakeModule
           actions-nix.flakeModules.default
           flakeModule
-          #./nix/checks.nix # disabled until i can get it to work right
+          # ./nix/checks.nix # disabled until i can get it to work right
         ];
 
         flake.actions-nix = {

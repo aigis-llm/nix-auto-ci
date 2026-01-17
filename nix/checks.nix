@@ -68,14 +68,13 @@
               virtualisation.mountHostNixStore = true;
               virtualisation.writableStore = true;
 
-              environment.systemPackages =
-                [
-                  pkgs.git
-                  pkgs.bash
-                  inputs.self.packages.x86_64-linux.__patched-lix-fast-build
-                ]
-                #++ map (x: x.drv) (lib.flatten (buildtimeDerivations pkgs.stdenv))
-                ++ builtins.attrValues inputs;
+              environment.systemPackages = [
+                pkgs.git
+                pkgs.bash
+                pkgs.lixPackageSets.latest.nix-fast-build
+              ]
+              #++ map (x: x.drv) (lib.flatten (buildtimeDerivations pkgs.stdenv))
+              ++ builtins.attrValues inputs;
 
               environment.etc.nix-auto-ci = {
                 mode = "symlink";
@@ -97,7 +96,7 @@
               machine.succeed("cd /tmp/nix-auto-ci && git init && git add .")
               machine.succeed("cat /etc/fstab 1>&2")
               machine.succeed("ls -la /nix/.ro-store/ 1>&2")
-              machine.succeed("cd /tmp/nix-auto-ci/testing-flake && nix run ${overrides} -- .#__patched-lix-fast-build --no-nom ${overrides} --flake \".#checks.${nodes.machine.nixpkgs.hostPlatform.system}\" --result-file result.json 1>&2")
+              machine.succeed("cd /tmp/nix-auto-ci/testing-flake && nix-fast-build --no-nom ${overrides} --flake \".#checks.${nodes.machine.nixpkgs.hostPlatform.system}\" --result-file result.json 1>&2")
             '';
         };
       };
