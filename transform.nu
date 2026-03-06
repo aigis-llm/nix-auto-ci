@@ -31,8 +31,7 @@ def main (file: string) {
         "BUILD" => {
           $status.attr | inspect
           let build_log = (do -i {
-            script -efq -c $"nix log --log-format internal-json \".#checks.($system).($status.attr)\"" e+o>|
-            | awk "/Running phase:/{p=1}p"
+            script -efq -c $"nix log --log-format internal-json \".#checks.($system).($status.attr)\""
           })
           rm ./typescript
           $status | update error $build_log
