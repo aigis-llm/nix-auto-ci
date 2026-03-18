@@ -7,13 +7,8 @@ jobs:
   fast-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@v20
-      with:
-        determinate: false
-        diagnostic-endpoint: ''
-        logger: pretty
-        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+    - uses: actions/checkout@v6
+    - uses: samueldr/lix-gha-installer-action@latest
     - uses: DeterminateSystems/magic-nix-cache-action@main
       with:
         diagnostic-endpoint: ''
@@ -23,7 +18,7 @@ jobs:
     - name: transform
       run: nix run --inputs-from . .#nix-auto-ci-transform -- result.json
     - name: upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: results
         path: |-
@@ -35,13 +30,8 @@ jobs:
     - fast-build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@v20
-      with:
-        determinate: false
-        diagnostic-endpoint: ''
-        logger: pretty
-        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+    - uses: actions/checkout@v6
+    - uses: samueldr/lix-gha-installer-action@latest
     - uses: DeterminateSystems/magic-nix-cache-action@main
       with:
         diagnostic-endpoint: ''
