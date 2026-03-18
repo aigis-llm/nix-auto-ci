@@ -13,20 +13,20 @@
       flake,
     }:
     let
-      sourceUrl = if (useLix) then "https://install.lix.systems/lix/lix-installer-${arch}" else null;
       customInstallStep =
         if (installStep != null) then
           installStep
         else
-          {
-            uses = "determinatesystems/nix-installer-action@${if (useLix) then "v20" else "main"}";
-            "with" = {
-              determinate = false;
-              logger = "pretty";
-              diagnostic-endpoint = "";
-            }
-            // (if (sourceUrl != null) then { source-url = sourceUrl; } else { });
-          };
+          (
+            if useLix then
+              {
+                uses = "samueldr/lix-gha-installer-action@latest";
+              }
+            else
+              {
+                uses = "cachix/install-nix-action@v31";
+              }
+          );
       cacheSteps = (
         if (shouldCache) then
           [
@@ -53,7 +53,7 @@
         fast-build = {
           steps = [
             {
-              uses = "actions/checkout@v4";
+              uses = "actions/checkout@v6";
             }
             customInstallStep
           ]
@@ -72,7 +72,7 @@
             }
             {
               name = "upload artifact";
-              uses = "actions/upload-artifact@v4";
+              uses = "actions/upload-artifact@v7";
               "with" = {
                 name = "results";
                 path = ''
@@ -94,13 +94,14 @@
           };
           steps = [
             {
-              uses = "actions/checkout@v4";
+              uses = "actions/checkout@v6";
             }
             customInstallStep
           ]
           ++ cacheSteps
           ++ [
             {
+              # Keeping back until https://github.com/actions/download-artifact/issues/426 is fixed
               uses = "actions/download-artifact@v4";
               "with" = {
                 path = "artifacts";
