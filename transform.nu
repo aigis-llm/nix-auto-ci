@@ -15,7 +15,7 @@ def main (file: string) {
           $status
         } else {
           $status.attr | inspect
-          let eval_err = (do -i {
+          let eval_err = (try {
               script -efq -c $"nix eval --show-trace --log-format internal-json \".#checks.($system).($status.attr)\"" e+o>|
               | awk "/@nix/{p=1}p" # avoid any escape codes before the first @nix
               | lines
@@ -30,11 +30,16 @@ def main (file: string) {
         })
         "BUILD" => {
           $status.attr | inspect
-          let build_log = (do -i {
+          let build_log = (try {
             script -efq -c $"nix log --log-format internal-json \".#checks.($system).($status.attr)\""
           })
           rm ./typescript
-          $status | update error $build_log
+          # For some reason getting build logs fails, no clue but this fixes it
+          if ($build_log == null) {
+            $status | update error ""
+          } else {
+            $status | update error $build_log
+          }
         }
         _ => $status
       }
